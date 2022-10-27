@@ -9,18 +9,22 @@
 	`sudo apt update && sudo apt -y upgrade && sudo apt-get -y install ubuntu-drivers-common && sudo ubuntu-drivers autoinstall && sudo apt install nvidia-driver-515`
 
 	Depending on the card, you'll want to install the most up-to-date driver
+
 		- `t4`: 515
+
 		- `v100`: 520
 
 	To check:
+
 		- `ubuntu-drivers devices`
+
 		- `nvidia-smi`
 
-3. Reboot and wait for instance to come back up (~ minute)
+2. Reboot and wait for instance to come back up (~ minute)
 
 	`sudo reboot`
 
-4. Verify installation
+3. Verify installation
 
 	`nvidia-smi`
 
@@ -47,17 +51,19 @@
 
 ## Run container
 
-Run and exec into container
+0. Log in to quay to get access to `quay.io/1qbit/diffusion-models`.
+
+1. Run and exec into container
 ```
 docker run --gpus all --ipc=host -it quay.io/1qbit/diffusion-models:score_sde_docker
 ```
 
-Verify GPU availabiility
+2. Verify GPU availabiility
 ```
 python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 ```
 
-Run `cifar10_ddpm.py`
+3. Run `cifar10_ddpm.py`
 ```
 XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/local/cuda python main.py --mode train --config configs/ve/cifar10_ddpm.py --workdir tmp
 ```
@@ -65,4 +71,4 @@ XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/local/cuda python main.py --mode train --
 
 ## Build
 
-...
+TODO
