@@ -1,6 +1,6 @@
 # Mr Yang's `score_sde`, dockerized
 
-## Prereqs
+## OS Prereqs
 
 ### Install GPU drivers
 
@@ -11,13 +11,11 @@
 	Depending on the card, you'll want to install the most up-to-date driver
 
 		- `t4`: 515
-
 		- `v100`: 520
 
 	To check:
 
 		- `ubuntu-drivers devices`
-
 		- `nvidia-smi`
 
 2. Reboot and wait for instance to come back up (~ minute)
@@ -29,7 +27,7 @@
 	`nvidia-smi`
 
 
-### Set up Docker environment
+### Set up docker environment
 
 1. Install docker
 
@@ -51,24 +49,25 @@
 
 ## Run container
 
-0. Log in to quay to get access to `quay.io/1qbit/diffusion-models`.
+First, log in to quay to get access to `quay.io/1qbit/diffusion-models`.
 
-1. Run and exec into container
+
+##### Run and exec into container
 ```
 docker run --gpus all --ipc=host -it quay.io/1qbit/diffusion-models:score_sde_docker
 ```
 
-2. Verify GPU availabiility
+##### Verify GPU availabiility
 ```
 python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 ```
 
-3. Run `cifar10_ddpm.py`
+##### Run `cifar10_ddpm.py`
 ```
 XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/local/cuda python main.py --mode train --config configs/ve/cifar10_ddpm.py --workdir tmp
 ```
 
 
-## Build
+### Build container
 
 TODO
