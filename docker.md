@@ -47,27 +47,6 @@
   	`sudo systemctl restart docker && sudo chmod 666 /var/run/docker.sock`
 
 
-## Run container
-
-First, log in to quay to get access to `quay.io/1qbit/diffusion-models`.
-
-
-##### Run and exec into container
-```
-docker run --gpus all --ipc=host -it quay.io/1qbit/diffusion-models:score_sde_docker
-```
-
-##### Verify GPU availabiility
-```
-python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
-```
-
-##### Run `cifar10_ddpm.py`
-```
-XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/local/cuda python main.py --mode train --config configs/ve/cifar10_ddpm.py --workdir tmp
-```
-
-
 ### Build container
 
 TODO
